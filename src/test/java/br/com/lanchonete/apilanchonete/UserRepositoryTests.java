@@ -3,6 +3,8 @@ package br.com.lanchonete.apilanchonete;
 import br.com.lanchonete.apilanchonete.user.User;
 import br.com.lanchonete.apilanchonete.user.UserRepository;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +41,17 @@ public class UserRepositoryTests {
         for(User user : users){
             System.out.println(user);
         }
+    }
+
+    @Test
+    public void testUpdate(){
+        Integer userId = 1;
+        Optional<User> optionalUser = repo.findById(userId);
+        User user = optionalUser.get();
+        user.setPassword("novasenha");
+        repo.save(user);
+
+        User updatedUser = repo.findById(userId).get();
+        Assertions.assertThat(updatedUser.getPassword()).isEqualTo("novasenha");
     }
 }
