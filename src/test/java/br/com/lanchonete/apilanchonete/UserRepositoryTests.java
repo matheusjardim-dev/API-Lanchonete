@@ -54,4 +54,12 @@ public class UserRepositoryTests {
         User updatedUser = repo.findById(userId).get();
         Assertions.assertThat(updatedUser.getPassword()).isEqualTo("novasenha");
     }
+
+    @Test
+    public void testGet(){
+        Integer userId = 1;
+        Optional<User> optionalUser = repo.findById(userId);
+        Assertions.assertThat(optionalUser).isPresent();
+        System.out.println(optionalUser.get());
+    }
 }
