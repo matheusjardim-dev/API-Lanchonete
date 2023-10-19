@@ -14,8 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 16)
-    private Long RA;
+    @Column(nullable = false, unique = true)
+    private Integer RA;
 
     @Column(length = 15, nullable = false)
     private String password;
@@ -31,11 +31,11 @@ public class User {
         this.id = id;
     }
 
-    public Long getRA() {
+    public Integer getRA() {
         return RA;
     }
 
-    public void setRA(Long rA) {
+    public void setRA(Integer rA) {
         RA = rA;
     }
 
