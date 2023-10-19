@@ -29,4 +29,15 @@ public class UserRepositoryTests {
         Assertions.assertThat(savedUser).isNotNull();
         Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
     }
+
+    @Test
+    public void testListAll(){
+        Iterable<User> users = repo.findAll();
+
+        Assertions.assertThat(users).hasSizeGreaterThan(0);
+
+        for(User user : users){
+            System.out.println(user);
+        }
+    }
 }

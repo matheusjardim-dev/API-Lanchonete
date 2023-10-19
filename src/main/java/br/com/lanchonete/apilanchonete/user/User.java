@@ -54,5 +54,12 @@ public class User {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + "]";
+    }
+
+    
     
 }
