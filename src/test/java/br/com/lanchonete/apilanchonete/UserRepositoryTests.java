@@ -22,9 +22,9 @@ public class UserRepositoryTests {
     @Test
     public void testAddNew(){
         User user = new User();
-        user.setRA(11034);
+        user.setRA(11015);
         user.setPassword("senha");
-        user.setNome("Duda");
+        user.setNome("Leo");
 
         User savedUser = repo.save(user);
 
