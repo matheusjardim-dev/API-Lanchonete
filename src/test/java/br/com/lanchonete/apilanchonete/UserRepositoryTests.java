@@ -25,6 +25,7 @@ public class UserRepositoryTests {
         user.setRA(11015);
         user.setPassword("senha");
         user.setNome("Leo");
+        user.setNivel(1);
 
         User savedUser = repo.save(user);
 
@@ -65,7 +66,7 @@ public class UserRepositoryTests {
     
     @Test 
     public void testDelete(){
-        Integer userId = 2;
+        Integer userId = 1;
         repo.deleteById(userId);
 
         Optional<User> optionalUser = repo.findById(userId);

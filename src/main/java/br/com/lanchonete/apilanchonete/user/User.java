@@ -23,6 +23,9 @@ public class User {
     @Column(length = 45, nullable = false, name = "nome")
     private String nome;
 
+    @Column(length = 15, nullable = false, name = "nivel")
+    private Integer nivel;
+
     public Integer getId() {
         return id;
     }
@@ -55,9 +58,17 @@ public class User {
         this.nome = nome;
     }
 
+    public Integer getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Integer nivel) {
+        this.nivel = nivel;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + "]";
+        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + ", nivel=" + nivel + "]";
     }
 
     
