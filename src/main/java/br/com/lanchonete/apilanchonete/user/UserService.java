@@ -25,4 +25,12 @@ public class UserService {
         }
         throw new UserNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
     }
+
+    public void delete(Integer id) throws UserNotFoundException{
+        Long count = repo.countById(id);
+        if(count == null || count == 0){
+             throw new UserNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
+        }
+        repo.deleteById(id);
+    }
 }
