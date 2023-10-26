@@ -41,7 +41,7 @@ public class UserController {
             User user = service.get(id);
             model.addAttribute("user", user);
             model.addAttribute("pageTitle", "Editar Usuário (ID: " + id + ")");
-            return "cadUser";
+            return "userForm";
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/users";  

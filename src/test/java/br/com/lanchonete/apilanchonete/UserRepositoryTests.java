@@ -25,6 +25,8 @@ public class UserRepositoryTests {
         user.setRA(11015);
         user.setPassword("senha");
         user.setNome("Leo");
+        user.setCurso("ADS");
+        user.setPeriodo("Manhã");
         user.setNivel(1);
 
         User savedUser = repo.save(user);
