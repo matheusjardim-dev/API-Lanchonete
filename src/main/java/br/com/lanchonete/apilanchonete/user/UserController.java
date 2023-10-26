@@ -25,7 +25,7 @@ public class UserController {
     public String showNewForm(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Cadastrar Usuário");
-        return "cadUser";
+        return "userForm";
     }
     
     @PostMapping("/users/save")
