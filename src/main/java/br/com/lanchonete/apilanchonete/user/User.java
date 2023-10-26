@@ -26,6 +26,28 @@ public class User {
     @Column(length = 15, nullable = false, name = "nivel")
     private Integer nivel;
 
+    @Column(length = 10, nullable = false, name = "curso")
+    private String curso;
+    
+    @Column(length = 5, nullable = false, name = "periodo")
+    private String periodo;
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -68,9 +90,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + ", nivel=" + nivel + "]";
+        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + ", nivel=" + nivel + ", curso=" + curso +", periodo=" + periodo +"]";
     }
-
-    
-    
 }
