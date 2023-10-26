@@ -32,26 +32,10 @@ public class User {
     @Column(length = 5, nullable = false, name = "periodo")
     private String periodo;
 
-    public String getCurso() {
-        return curso;
-    }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
-    }
-
-    public String getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
-    }
-
     public Integer getId() {
         return id;
     }
-
+    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -67,7 +51,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
@@ -75,17 +59,33 @@ public class User {
     public String getNome() {
         return nome;
     }
-
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
     public Integer getNivel() {
         return nivel;
     }
 
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+    
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+    
+    public String getPeriodo() {
+        return periodo;
+    }
+    
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
 
     @Override
