@@ -26,6 +26,8 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>RA</th>
+                        <th>Curso</th>
+                        <th>Periodo</th>
                         <th>Nível</th>
                         <th></th>
                     </tr>
@@ -36,6 +38,8 @@
                             <td>[[${user.id}]]</td>
                             <td>[[${user.nome}]]</td>
                             <td>[[${user.RA}]]</td>
+                            <td>[[${user.Curso}]]</td>
+                            <td>[[${user.Periodo}]]</td>
                             <td>[[${user.nivel}]]</td>
                             <td>
                                 <a class="h4 mr-3" th:href="@{'/users/edit/'+ ${user.id}}">Editar</a>
