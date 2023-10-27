@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_prod;
+    private Integer id;
 
     @Column(length = 45, nullable = false, name = "nome")
     private String nome;
@@ -23,12 +23,12 @@ public class Produto {
     @Column(length = 45, nullable = false)
     private Double valor;
 
-    public Integer getId_prod() {
-        return id_prod;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_prod(Integer id_prod) {
-        this.id_prod = id_prod;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -57,7 +57,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto [id_prod=" + id_prod + ", nome=" + nome + ", disponivel=" + disponivel + ", valor=" + valor
+        return "Produto [id=" + id + ", nome=" + nome + ", disponivel=" + disponivel + ", valor=" + valor
                 + "]";
     }    
 }

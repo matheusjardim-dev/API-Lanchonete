@@ -1,7 +1,7 @@
 package br.com.lanchonete.apilanchonete.produto;
 
-public class ProdutoNotFoundException {
+public class ProdutoNotFoundException extends Throwable {
     public ProdutoNotFoundException(String message){
-        //super(message);
+        super(message);
     }
 }

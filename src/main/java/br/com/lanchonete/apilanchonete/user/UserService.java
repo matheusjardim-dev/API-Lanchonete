@@ -22,7 +22,7 @@ public class UserService {
         Optional<User> result = repo.findById(id);
         if(result.isPresent()){
             return result.get();
-        }
+        }   
         throw new UserNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
     }
 
