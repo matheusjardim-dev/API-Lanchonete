@@ -24,14 +24,14 @@ public class ProdutoController {
     @GetMapping("/meus-produtos/new")
     public String showNewForm(Model model){
         model.addAttribute("produto", new Produto());
-        model.addAttribute("pageTitle", "Cadastrar Usuário");
+        model.addAttribute("pageTitle", "Cadastrar Produto");
         return "prodForm";
     }
     
     @PostMapping("/meus-produtos/save")
     public String saveProduto(Produto produto, RedirectAttributes ra){
         service.save(produto);
-        ra.addFlashAttribute("message", "Usuário cadastrado com sucesso!");
+        ra.addFlashAttribute("message", "Produto salvo com sucesso!");
         return "redirect:/meus-produtos";  
     }
     
@@ -40,7 +40,7 @@ public class ProdutoController {
         try {
             Produto produto = service.get(id);
             model.addAttribute("produto", produto);
-            model.addAttribute("pageTitle", "Editar Usuário (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Editar Produto (ID: " + id + ")");
             return "prodForm";
         } catch (ProdutoNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
@@ -52,7 +52,7 @@ public class ProdutoController {
     public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             service.delete(id);
-            ra.addFlashAttribute("message", "O usuário com ID " + id + " foi deletado.");
+            ra.addFlashAttribute("message", "O produto com ID " + id + " foi deletado.");
         } catch (ProdutoNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
         }

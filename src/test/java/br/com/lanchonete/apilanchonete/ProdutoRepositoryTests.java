@@ -24,7 +24,7 @@ public class ProdutoRepositoryTests {
         Produto produto = new Produto();
         produto.setNome("Esfiha de Frango");
         produto.setValor(7.99);
-        produto.setDisponivel(true);
+        produto.setDisponivel("disponivel");
         
         Produto savedProduto = repo.save(produto);
 
@@ -45,14 +45,14 @@ public class ProdutoRepositoryTests {
 
     @Test
     public void testUpdate(){
-        Integer produtoId = 1;
+        Integer produtoId = 2;
         Optional<Produto> optionalProduto = repo.findById(produtoId);
         Produto produto = optionalProduto.get();
-        produto.setDisponivel(false);
+        produto.setDisponivel("disponivel");
         repo.save(produto);
 
         Produto updatedProduto = repo.findById(produtoId).get();
-        Assertions.assertThat(updatedProduto.isDisponivel()).isEqualTo(false);
+        Assertions.assertThat(updatedProduto.getDisponivel()).isEqualTo("disponivel");
     }
 
     @Test

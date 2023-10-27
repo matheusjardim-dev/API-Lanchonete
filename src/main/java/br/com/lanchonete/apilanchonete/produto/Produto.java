@@ -17,11 +17,19 @@ public class Produto {
     @Column(length = 45, nullable = false, name = "nome")
     private String nome;
     
-    @Column(length = 45, nullable = false)
-    private boolean disponivel;
-    
-    @Column(length = 45, nullable = false)
+    @Column(length = 45, nullable = false, name = "disponivel")
+    private String disponivel;
+
+    @Column(length = 45, nullable = false, name = "valor")
     private Double valor;
+    
+    public String getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(String disponivel) {
+        this.disponivel = disponivel;
+    }
 
     public Integer getId() {
         return id;
@@ -39,13 +47,6 @@ public class Produto {
         this.nome = nome;
     }
 
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
-    }
 
     public Double getValor() {
         return valor;

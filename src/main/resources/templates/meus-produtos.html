@@ -33,13 +33,13 @@
                 <tbody>
                     <th:block th:each="produtos:${listProdutos}">
                         <tr>
-                            <td>[[${produtos.id_prod}]]</td>
+                            <td>[[${produtos.id}]]</td>
                             <td>[[${produtos.nome}]]</td>
                             <td>[[${produtos.valor}]]</td>
                             <td>[[${produtos.disponivel}]]</td>
                             <td>
-                                <a class="h4 mr-3" th:href="@{'/meus-produtos/edit/'+ ${produto.id_prod}}">Editar</a>
-                                <a class="h4" th:href="@{'/meus-produtos/delete/'+ ${produto.id_prod}}">Deletar</a>
+                                <a class="h4 mr-3" th:href="@{'/meus-produtos/edit/'+ ${produtos.id}}">Editar</a>
+                                <a class="h4" th:href="@{'/meus-produtos/delete/'+ ${produtos.id}}">Deletar</a>
                             </td>
                         </tr>
                     </th:block>
