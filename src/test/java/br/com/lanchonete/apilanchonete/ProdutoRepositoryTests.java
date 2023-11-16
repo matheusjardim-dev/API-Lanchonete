@@ -2,6 +2,7 @@ package br.com.lanchonete.apilanchonete;
 
 import br.com.lanchonete.apilanchonete.produto.Produto;
 import br.com.lanchonete.apilanchonete.produto.ProdutoRepository;
+import br.com.lanchonete.apilanchonete.user.User;
 
 import java.util.Optional;
 
@@ -21,9 +22,12 @@ public class ProdutoRepositoryTests {
 
     @Test
     public void testAddNewProd(){
+        User user = new User();
+        user.setId(2);
         Produto produto = new Produto();
         produto.setNome("Esfiha de Frango");
         produto.setValor(7.99);
+        produto.setUser(user);
         produto.setDisponivel("disponivel");
         
         Produto savedProduto = repo.save(produto);

@@ -14,28 +14,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     @Autowired private UserService service;
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String showUserList(Model model){
         List<User> listUsers = service.listAll();
         model.addAttribute("listUsers", listUsers);
         return "users";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/admin/users/new")
     public String showNewForm(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Cadastrar Usuário");
         return "userForm";
     }
     
-    @PostMapping("/users/save")
+    @PostMapping("/admin/users/save")
     public String saveUser(User user, RedirectAttributes ra){
         service.save(user);
         ra.addFlashAttribute("message", "Usuário salvo com sucesso!");
         return "redirect:/users";  
     }
     
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/admin/users/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try {
             User user = service.get(id);
@@ -48,7 +48,7 @@ public class UserController {
         }
     }
     
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             service.delete(id);
@@ -58,4 +58,12 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
+    @GetMapping("/login")
+    public String showLoginForm(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("pageTitle", "Login");
+        return "login";
+    }
+
 } 

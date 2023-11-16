@@ -1,10 +1,13 @@
 package br.com.lanchonete.apilanchonete.produto;
 
+import br.com.lanchonete.apilanchonete.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,6 +16,10 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
     @Column(length = 45, nullable = false, name = "nome")
     private String nome;
@@ -39,6 +46,14 @@ public class Produto {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -55,10 +70,10 @@ public class Produto {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
+    
     @Override
     public String toString() {
-        return "Produto [id=" + id + ", nome=" + nome + ", disponivel=" + disponivel + ", valor=" + valor
+        return "Produto [id=" + id + ", user=" + user +  ", nome=" + nome + ", disponivel=" + disponivel + ", valor=" + valor
                 + "]";
-    }    
+    }
 }

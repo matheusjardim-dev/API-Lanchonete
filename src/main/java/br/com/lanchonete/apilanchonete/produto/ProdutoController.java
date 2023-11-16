@@ -1,7 +1,7 @@
 package br.com.lanchonete.apilanchonete.produto;
 
 import java.util.List;
-
+import br.com.lanchonete.apilanchonete.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,28 +14,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProdutoController {
     @Autowired private ProdutoService service;
 
-    @GetMapping("/meus-produtos")
+    @GetMapping("/vendedor/{user_id}/meus-produtos")
     public String showProdutoList(Model model){
         List<Produto> listProdutos = service.listAll();
         model.addAttribute("listProdutos", listProdutos);
         return "meus-produtos";
     }
 
-    @GetMapping("/meus-produtos/new")
+    @GetMapping("/vendedor/{user_id}/meus-produtos/new")
     public String showNewForm(Model model){
         model.addAttribute("produto", new Produto());
         model.addAttribute("pageTitle", "Cadastrar Produto");
         return "prodForm";
     }
     
-    @PostMapping("/meus-produtos/save")
+    @PostMapping("/vendedor/{user_id}/meus-produtos/save")
     public String saveProduto(Produto produto, RedirectAttributes ra){
         service.save(produto);
         ra.addFlashAttribute("message", "Produto salvo com sucesso!");
-        return "redirect:/meus-produtos";  
+        return "redirect:/vendedor/{user_id}/meus-produtos";  
     }
     
-    @GetMapping("/meus-produtos/edit/{id}")
+    @GetMapping("/vendedor/{user_id}/meus-produtos/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try {
             Produto produto = service.get(id);
@@ -44,11 +44,11 @@ public class ProdutoController {
             return "prodForm";
         } catch (ProdutoNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/meus-produtos";  
+            return "redirect:/vendedor/{user_id}/meus-produtos";  
         }
     }
     
-    @GetMapping("/produtos/delete/{id}")
+    @GetMapping("/vendedor/{user_id}/meus-produtos/delete/{id}")
     public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             service.delete(id);
@@ -56,6 +56,6 @@ public class ProdutoController {
         } catch (ProdutoNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/meus-produtos";
+        return "redirect:/vendedor/{user_id}/meus-produtos";
     }
 }

@@ -18,6 +18,15 @@ public class UserService {
         repo.save(user);
     }
 
+     public User login(Integer rA) throws UserNotFoundException{
+        Optional<User> result = repo.findByRA(rA);
+
+        if(result.isPresent()){
+            return result.get();
+        }   
+        throw new UserNotFoundException("Nenhum Usuário foi encontrado com o RA " + rA);
+    }
+    
     public User get(Integer id) throws UserNotFoundException{
         Optional<User> result = repo.findById(id);
         if(result.isPresent()){
