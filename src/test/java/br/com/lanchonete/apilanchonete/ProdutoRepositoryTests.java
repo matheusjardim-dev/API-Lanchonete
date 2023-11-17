@@ -25,7 +25,7 @@ public class ProdutoRepositoryTests {
         User user = new User();
         user.setId(2);
         Produto produto = new Produto();
-        produto.setNome("Esfiha de Frango");
+        produto.setNome("coxinha");
         produto.setValor(7.99);
         produto.setUser(user);
         produto.setDisponivel("disponivel");

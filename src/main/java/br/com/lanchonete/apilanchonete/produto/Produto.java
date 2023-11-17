@@ -18,7 +18,7 @@ public class Produto {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idUser", referencedColumnName = "id", nullable = false)
     private User user;
 
     @Column(length = 45, nullable = false, name = "nome")

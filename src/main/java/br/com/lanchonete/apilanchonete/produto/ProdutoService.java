@@ -23,15 +23,19 @@ public class ProdutoService {
         if(result.isPresent()){
             return result.get();
         }
-        throw new ProdutoNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
+        throw new ProdutoNotFoundException("Nenhum produto foi encontrado com o id " + id);
     }
 
     public void delete(Integer id) throws ProdutoNotFoundException{
         Long count = repo.countById(id);
         if(count == null || count == 0){
-             throw new ProdutoNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
+             throw new ProdutoNotFoundException("Nenhum produto foi encontrado com o id " + id);
         }
         repo.deleteById(id);
+    }
+
+    public List<Produto> listProd(Integer idUser) {
+        return repo.findByUser_Id(idUser);
     }
 
 }

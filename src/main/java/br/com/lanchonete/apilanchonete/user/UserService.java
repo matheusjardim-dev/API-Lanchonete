@@ -9,22 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired private UserRepository repo;
-
+   
     public List<User> listAll(){
         return (List<User>) repo.findAll();
     }
 
     public void save(User user) {
         repo.save(user);
-    }
-
-     public User login(Integer rA) throws UserNotFoundException{
-        Optional<User> result = repo.findByRA(rA);
-
-        if(result.isPresent()){
-            return result.get();
-        }   
-        throw new UserNotFoundException("Nenhum Usuário foi encontrado com o RA " + rA);
     }
     
     public User get(Integer id) throws UserNotFoundException{
@@ -41,5 +32,11 @@ public class UserService {
              throw new UserNotFoundException("Nenhum Usuário foi encontrado com o id " + id);
         }
         repo.deleteById(id);
+    }
+
+    public boolean autenticar(User user){
+        
+
+        return true ;
     }
 }

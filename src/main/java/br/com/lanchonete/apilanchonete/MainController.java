@@ -11,8 +11,8 @@ public class MainController {
         return "mainPage";
     }
 
-    @GetMapping("/home")
-    public String showHomePage(){
+    @GetMapping("/vendedor")
+    public String showVendedorPage(){
         return "index";
     }
 }

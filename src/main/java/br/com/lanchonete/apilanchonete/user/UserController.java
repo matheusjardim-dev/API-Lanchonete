@@ -56,7 +56,7 @@ public class UserController {
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/login")
@@ -64,6 +64,14 @@ public class UserController {
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Login");
         return "login";
+    }
+
+    @PostMapping("/login/auth")
+    public String authUser(User user, RedirectAttributes ra){
+        service.save(user);
+        ra.addFlashAttribute("message", "Usuário logado com sucesso!");
+        
+        return "redirect:/users";  
     }
 
 } 
