@@ -22,9 +22,12 @@ public class ProdutoController {
     public String showProdutoList(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
         try {
             User user = serviceUser.get(idUser);
-            List<Produto> listProdutos = serviceProd.listProd(user.getId());
+            Integer id = user.getId();
+            List<Produto> listProdutos = serviceProd.listProd(id);
             model.addAttribute("listProdutos", listProdutos);
+            model.addAttribute("idUser", id);
             return "meus-produtos";
+
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/vendedor";  
@@ -35,22 +38,24 @@ public class ProdutoController {
     public String showNewForm(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
         try {
             User user = serviceUser.get(idUser);
-            idUser = user.getId();
-            model.addAttribute("produto", new Produto());
-            model.addAttribute("user", idUser);
+            Produto produto = new Produto();
+            produto.setUser(user);
+            model.addAttribute("produto", produto);
             model.addAttribute("pageTitle", "Cadastrar Produto");
             return "prodForm";
+
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/vendedor/meus-produtos/{idUser}";  
+            return "redirect:/vendedor";  
         }
     }
     
     @PostMapping("/vendedor/meus-produtos/save")
-    public String saveProduto(Model model, RedirectAttributes ra, Produto produto){
+    public String saveProduto(RedirectAttributes ra, Produto produto){
             serviceProd.save(produto);
             ra.addFlashAttribute("message", "Produto salvo com sucesso!");
-            return "redirect:/vendedor/meus-produtos/{idUser}"; 
+
+            return "redirect:/vendedor"; 
     }
     
     @GetMapping("/vendedor/meus-produtos/{idUser}/edit/{id}")
