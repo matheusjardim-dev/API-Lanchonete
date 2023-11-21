@@ -9,54 +9,88 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
     @Autowired private UserService service;
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping("/admin/users")
     public String showUserList(Model model){
-        List<User> listUsers = service.listAll();
-        model.addAttribute("listUsers", listUsers);
-        return "users";
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            List<User> listUsers = service.listAll();
+            model.addAttribute("listUsers", listUsers);
+            return "users";
+        } else {
+            return "redirect:/login";  
+        }
     }
 
     @GetMapping("/admin/users/new")
     public String showNewForm(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("pageTitle", "Cadastrar Usuário");
-        return "userForm";
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            model.addAttribute("user", new User());
+            model.addAttribute("pageTitle", "Cadastrar Usuário");
+            return "userForm";
+        } else {
+            return "redirect:/login";  
+        }
+        
+        
     }
     
     @PostMapping("/admin/users/save")
     public String saveUser(User user, RedirectAttributes ra){
-        service.save(user);
-        ra.addFlashAttribute("message", "Usuário salvo com sucesso!");
-        return "redirect:/admin/users";  
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            service.save(user);
+            ra.addFlashAttribute("message", "Usuário salvo com sucesso!");
+            return "redirect:/admin/users"; 
+        } else {
+            return "redirect:/login";  
+        }
+         
     }
     
     @GetMapping("/admin/users/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
-        try {
-            User user = service.get(id);
-            model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Editar Usuário (ID: " + id + ")");
-            return "userForm";
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/admin/users";  
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            try {
+                User user = service.get(id);
+                model.addAttribute("user", user);
+                model.addAttribute("pageTitle", "Editar Usuário (ID: " + id + ")");
+                return "userForm";
+            } catch (UserNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+                return "redirect:/admin/users";  
+            }
+        } else {
+            return "redirect:/login";  
         }
+        
     }
     
     @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) {
-        try {
-            service.delete(id);
-            ra.addFlashAttribute("message", "O usuário com ID " + id + " foi deletado.");
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            try {
+                service.delete(id);
+                ra.addFlashAttribute("message", "O usuário com ID " + id + " foi deletado.");
+            } catch (UserNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+            }
+            return "redirect:/admin/users";
+        } else {
+            return "redirect:/login";  
         }
-        return "redirect:/admin/users";
+        
     }
 
     @GetMapping("/login")
@@ -64,6 +98,13 @@ public class UserController {
         model.addAttribute("user", new User());
         model.addAttribute("pageTitle", "Login");
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return "redirect:/login";  
     }
 
     @PostMapping("/login/auth")
@@ -74,6 +115,8 @@ public class UserController {
             try {
                 user = service.getDados(ra);
                 rea.addFlashAttribute("message", "Usuário logado com sucesso!");
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
                 if(user.getNivel() == 1){
                     return "redirect:/admin/users";
                 } else if (user.getNivel() == 2) {
