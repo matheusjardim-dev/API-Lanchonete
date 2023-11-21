@@ -121,9 +121,7 @@ public class UserController {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 session.setAttribute("idUser", user.getId());
-                Integer idUser = (Integer) session.getAttribute("idUser");
                 session.setAttribute("nivelUser", user.getNivel());
-                //rea.addAttribute("idUser", idUser);
 
                 if(user.getNivel() == 1){
                     return "redirect:/admin/users";

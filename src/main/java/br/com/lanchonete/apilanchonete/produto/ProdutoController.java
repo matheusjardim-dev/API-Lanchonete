@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import br.com.lanchonete.apilanchonete.user.User;
 import br.com.lanchonete.apilanchonete.user.UserNotFoundException;
 import br.com.lanchonete.apilanchonete.user.UserService;
@@ -62,15 +61,22 @@ public class ProdutoController {
     }
     
     @PostMapping("/vendedor/meus-produtos/save")
-    public String saveProduto(RedirectAttributes ra, Produto produto){
+    public String saveProduto(RedirectAttributes ra, Produto produto, Model model){
+            HttpSession session = request.getSession();
+            Integer idUser = (Integer) session.getAttribute("idUser");
+            model.addAttribute("idUser", idUser);
+            
             serviceProd.save(produto);
             ra.addFlashAttribute("message", "Produto salvo com sucesso!");
 
-            return "redirect:/vendedor"; 
+            return "redirect:/vendedor/meus-produtos/{idUser}"; 
     }
     
     @GetMapping("/vendedor/meus-produtos/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+        HttpSession session = request.getSession();
+        Integer idUser = (Integer) session.getAttribute("idUser");
+        model.addAttribute("idUser", idUser);
         try {
             Produto produto = serviceProd.get(id);
             model.addAttribute("produto", produto);
@@ -83,7 +89,10 @@ public class ProdutoController {
     }
     
     @GetMapping("/vendedor/meus-produtos/delete/{id}")
-    public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra) {
+    public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra, Model model) {
+        HttpSession session = request.getSession();
+        Integer idUser = (Integer) session.getAttribute("idUser");
+        model.addAttribute("idUser", idUser);
         try {
             serviceProd.delete(id);
             ra.addFlashAttribute("message", "O produto com ID " + id + " foi deletado.");
@@ -94,10 +103,15 @@ public class ProdutoController {
     }
 
     @GetMapping("/vendedor")
-    public String vendedor(RedirectAttributes ra, Model model) {
+    public String vendedor(Model model) {
         HttpSession session = request.getSession();
-        Integer idUser = (Integer) session.getAttribute("idUser");
-        model.addAttribute("idUser", idUser);
-        return "mainPage";
+        if ((Integer)session.getAttribute("nivelUser") == 2) {
+            Integer idUser = (Integer) session.getAttribute("idUser");
+            model.addAttribute("idUser", idUser);
+            return "mainPage";
+        } else {
+            return "redirect:/login";  
+        }
+        
     }
 }
