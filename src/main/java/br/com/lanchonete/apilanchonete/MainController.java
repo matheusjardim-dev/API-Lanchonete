@@ -8,11 +8,11 @@ public class MainController {
     
     @GetMapping("/")
     public String showMainPage(){
-        return "mainPage";
+        return "index";
     }
 
     @GetMapping("/vendedor")
     public String showVendedorPage(){
-        return "index";
+        return "mainPage";
     }
 }

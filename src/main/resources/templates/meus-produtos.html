@@ -14,7 +14,7 @@
             <h1>Meus Produtos</h1>
         </div>
         <div class="m-2">
-            <a class="h3" th:href="@{/vendedor/meus-produtos/${idUser}/new}">Cadastrar</a>
+            <a class="h3" th:href="@{/vendedor/meus-produtos/new/{idUser}}">Cadastrar</a>
         </div>
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
@@ -38,15 +38,15 @@
                             <td>[[${produtos.valor}]]</td>
                             <td>[[${produtos.disponivel}]]</td>
                             <td>
-                                <a class="h4 mr-3" th:href="@{'/meus-produtos/edit/'+ ${produtos.id}}">Editar</a>
-                                <a class="h4" th:href="@{'/meus-produtos/delete/'+ ${produtos.id}}">Deletar</a>
+                                <a class="h4 mr-3" th:href="@{'vendedor/meus-produtos/edit/'+ ${produtos.id}}">Editar</a>
+                                <a class="h4" th:href="@{'vendedor/meus-produtos/delete/'+ ${produtos.id}}">Deletar</a>
                             </td>
                         </tr>
                     </th:block>
                 </tbody>
             </table>
         </div>
-        <a href="/">back</a>
+        <a href="/vendedor">back</a>
     </div>
 </body>
 

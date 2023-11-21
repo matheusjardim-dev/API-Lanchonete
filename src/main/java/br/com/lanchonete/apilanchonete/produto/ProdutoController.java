@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.lanchonete.apilanchonete.user.User;
@@ -18,7 +19,7 @@ public class ProdutoController {
     @Autowired private ProdutoService serviceProd;
     @Autowired private UserService serviceUser;
 
-    @GetMapping("/vendedor/meus-produtos/{idUser}")
+    @GetMapping("/vendedor/meus-produtos/{idUser}") 
     public String showProdutoList(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
         try {
             User user = serviceUser.get(idUser);
@@ -34,7 +35,7 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("/vendedor/meus-produtos/{idUser}/new")
+    @GetMapping("/vendedor/meus-produtos/new/{idUser}")
     public String showNewForm(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
         try {
             User user = serviceUser.get(idUser);
@@ -71,7 +72,7 @@ public class ProdutoController {
         }
     }
     
-    @GetMapping("/vendedor/meus-produtos/{idUser}/delete/{id}")
+    @GetMapping("/vendedor/meus-produtos/delete/{id}")
     public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             serviceProd.delete(id);
