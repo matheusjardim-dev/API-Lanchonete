@@ -34,9 +34,21 @@ public class UserService {
         repo.deleteById(id);
     }
 
-    public boolean autenticar(User user){
-        
-
-        return true ;
+    public boolean autenticar(Integer rA, String password){
+        Long count = repo.countByRAAndPassword(rA, password);
+        if(count == 1){
+            return true;
+        } else {
+            return false;
+        }        
     }
+
+    public User getDados(Integer rA) throws UserNotFoundException{
+        Optional<User> result = repo.findByRA(rA);
+        if(result.isPresent()){
+            return result.get();
+        }   
+        throw new UserNotFoundException("Nenhum Usuário foi encontrado com o RA: " + rA);
+    }
+
 }

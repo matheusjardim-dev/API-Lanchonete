@@ -32,7 +32,7 @@ public class UserController {
     public String saveUser(User user, RedirectAttributes ra){
         service.save(user);
         ra.addFlashAttribute("message", "Usuário salvo com sucesso!");
-        return "redirect:/users";  
+        return "redirect:/admin/users";  
     }
     
     @GetMapping("/admin/users/edit/{id}")
@@ -44,7 +44,7 @@ public class UserController {
             return "userForm";
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/users";  
+            return "redirect:/admin/users";  
         }
     }
     
@@ -67,11 +67,27 @@ public class UserController {
     }
 
     @PostMapping("/login/auth")
-    public String authUser(User user, RedirectAttributes ra){
-        service.save(user);
-        ra.addFlashAttribute("message", "Usuário logado com sucesso!");
-        
-        return "redirect:/users";  
+    public String authUser(User user, RedirectAttributes rea){
+        Integer ra = user.getRA();
+        String password = user.getPassword();
+        if(service.autenticar(ra, password)){
+            try {
+                user = service.getDados(ra);
+                rea.addFlashAttribute("message", "Usuário logado com sucesso!");
+                if(user.getNivel() == 1){
+                    return "redirect:/admin/users";
+                } else if (user.getNivel() == 2) {
+                    return "redirect:/vendedor";
+                } else {
+                    return "redirect:/login";  
+                }
+                
+            } catch (UserNotFoundException e) {
+                rea.addFlashAttribute("message", e.getMessage());
+                return "redirect:/login";  
+            }
+        } else {
+            return "redirect:/login";
+        }
     }
-
 } 

@@ -14,7 +14,7 @@
             <h1>Usuários</h1>
         </div>
         <div class="m-2">
-            <a class="h3" th:href="@{/users/new}">Cadastrar</a>
+            <a class="h3" th:href="@{/admin/users/new}">Cadastrar</a>
         </div>
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
@@ -50,7 +50,7 @@
                 </tbody>
             </table>
         </div>
-        <a href="/">back</a>
+        <a href="/admin">back</a>
     </div>
 </body>
 

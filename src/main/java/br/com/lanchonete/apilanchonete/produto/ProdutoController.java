@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.lanchonete.apilanchonete.user.User;
@@ -59,7 +58,7 @@ public class ProdutoController {
             return "redirect:/vendedor"; 
     }
     
-    @GetMapping("/vendedor/meus-produtos/{idUser}/edit/{id}")
+    @GetMapping("/vendedor/meus-produtos/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try {
             Produto produto = serviceProd.get(id);
