@@ -104,23 +104,33 @@ public class UserController {
     public String logout(){
         HttpSession session = request.getSession();
         session.removeAttribute("user");
+        session.removeAttribute("idUser");
+        session.removeAttribute("nivelUser");
         return "redirect:/login";  
     }
 
     @PostMapping("/login/auth")
-    public String authUser(User user, RedirectAttributes rea){
+    public String authUser(User user, RedirectAttributes rea, Model model){
         Integer ra = user.getRA();
         String password = user.getPassword();
+
         if(service.autenticar(ra, password)){
             try {
                 user = service.getDados(ra);
                 rea.addFlashAttribute("message", "Usuário logado com sucesso!");
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                session.setAttribute("idUser", user.getId());
+                Integer idUser = (Integer) session.getAttribute("idUser");
+                session.setAttribute("nivelUser", user.getNivel());
+                //rea.addAttribute("idUser", idUser);
+
                 if(user.getNivel() == 1){
                     return "redirect:/admin/users";
+
                 } else if (user.getNivel() == 2) {
                     return "redirect:/vendedor";
+
                 } else {
                     return "redirect:/login";  
                 }

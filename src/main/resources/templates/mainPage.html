@@ -11,7 +11,9 @@
 <body>
     <div class="container-fluid text-center">
         <h1>Página Vendedor</h1>
-        <a href="/vendedor/meus-produtos" class="h3">Meus Produtos</a>
+        <a th:href="@{/vendedor/meus-produtos/{idUser}(idUser=${idUser})}" class="h3">Meus Produtos</a>
+        <br>
+        <a href="/logout" class="h3">sair</a>
     </div>
 </body>
 

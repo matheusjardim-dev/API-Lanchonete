@@ -12,26 +12,37 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.lanchonete.apilanchonete.user.User;
 import br.com.lanchonete.apilanchonete.user.UserNotFoundException;
 import br.com.lanchonete.apilanchonete.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProdutoController {
     @Autowired private ProdutoService serviceProd;
     @Autowired private UserService serviceUser;
+    @Autowired private HttpServletRequest request;
 
     @GetMapping("/vendedor/meus-produtos/{idUser}") 
     public String showProdutoList(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
-        try {
-            User user = serviceUser.get(idUser);
-            Integer id = user.getId();
-            List<Produto> listProdutos = serviceProd.listProd(id);
-            model.addAttribute("listProdutos", listProdutos);
-            model.addAttribute("idUser", id);
-            return "meus-produtos";
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            try {
+                User user = serviceUser.get(idUser);
+                Integer id = (Integer) session.getAttribute("idUser");
+                List<Produto> listProdutos = serviceProd.listProd(id);
+                model.addAttribute("listProdutos", listProdutos);
+                model.addAttribute("idUser", id);
+                return "meus-produtos";
 
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/vendedor";  
+            } catch (UserNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+                return "redirect:/vendedor";  
+            }
+
+        } else {
+            return "redirect:/login";  
         }
+        
+        
     }
 
     @GetMapping("/vendedor/meus-produtos/new/{idUser}")
@@ -80,5 +91,13 @@ public class ProdutoController {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/vendedor/meus-produtos/{idUser}";
+    }
+
+    @GetMapping("/vendedor")
+    public String vendedor(RedirectAttributes ra, Model model) {
+        HttpSession session = request.getSession();
+        Integer idUser = (Integer) session.getAttribute("idUser");
+        model.addAttribute("idUser", idUser);
+        return "mainPage";
     }
 }

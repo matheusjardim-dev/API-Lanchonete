@@ -11,7 +11,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/vendedor")
+    @GetMapping("/ve")
     public String showVendedorPage(){
         return "mainPage";
     }

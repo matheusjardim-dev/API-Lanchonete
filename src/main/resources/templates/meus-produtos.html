@@ -14,7 +14,7 @@
             <h1>Meus Produtos</h1>
         </div>
         <div class="m-2">
-            <a class="h3" th:href="@{/vendedor/meus-produtos/new/{idUser}}">Cadastrar</a>
+            <a class="h3" th:href="@{/vendedor/meus-produtos/new/{idUser}(idUser=${idUser})}">Cadastrar</a>
         </div>
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
