@@ -4,16 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Produtos</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 
 <body>
     <div class="container-fluid text-center">
-        <h1>Página Admin</h1>
-        <a href="/admin/users" class="h3">Users</a>
-        <br>
-        <a href="/logout" class="h3">sair</a>
+        <div>
+            <h1>Meus Produtos</h1>
+        </div>
+        <div class="m-2">
+            <a class="h3" th:href="@{/vendedor/meus-produtos/new/{idUser}(idUser=${idUser})}">Cadastrar</a>
+        </div>
+        <div th:if="${message}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>valor</th>
+                        <th>Disponibilidade</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="produtos:${listProdutos}">
+                        <tr>
+                            <td>[[${produtos.nome}]]</td>
+                            <td>[[${produtos.valor}]]</td>
+                            <td>[[${produtos.disponivel}]]</td>
+                            <td>
+                                <a class="h4 mr-3" th:href="@{'wa.me/'+ ${user.telefone}}">Entrar em contato</a>
+                            </td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 

@@ -141,4 +141,37 @@ public class UserController {
             return "redirect:/login";
         }
     }
+    
+    @GetMapping("/vendedor")
+    public String showVendedorPage(Model model) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            if ((Integer)session.getAttribute("nivelUser") == 2) {
+                Integer idUser = (Integer) session.getAttribute("idUser");
+                model.addAttribute("idUser", idUser);
+                return "mainPage";
+            } else {
+                return "redirect:/login";  
+            }
+        } else {
+            return "redirect:/login";  
+        }
+
+        
+        
+    }
+
+    @GetMapping("/admin")
+    public String showAdminPage(){
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            if ((Integer)session.getAttribute("nivelUser") == 1) {
+                return "admin";
+            } else {
+                return "redirect:/login";  
+            }
+        } else {
+            return "redirect:/login";  
+        }
+    }
 } 

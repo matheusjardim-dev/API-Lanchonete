@@ -19,6 +19,9 @@ public class User {
 
     @Column(length = 5, nullable = false)
     private String password;
+    
+    @Column(length = 15, nullable = false, name = "telefone")
+    private String telefone;
 
     @Column(length = 45, nullable = false, name = "nome")
     private String nome;
@@ -88,8 +91,16 @@ public class User {
         this.periodo = periodo;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", nome=" + nome + ", nivel=" + nivel + ", curso=" + curso +", periodo=" + periodo +"]";
+        return "User [id=" + id + ", RA=" + RA + ", password=" + password + ", telefone=" + telefone + ", nome=" + nome + ", nivel=" + nivel + ", curso=" + curso +", periodo=" + periodo +"]";
     }
 }

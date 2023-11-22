@@ -46,18 +46,26 @@ public class ProdutoController {
 
     @GetMapping("/vendedor/meus-produtos/new/{idUser}")
     public String showNewForm(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
-        try {
-            User user = serviceUser.get(idUser);
-            Produto produto = new Produto();
-            produto.setUser(user);
-            model.addAttribute("produto", produto);
-            model.addAttribute("pageTitle", "Cadastrar Produto");
-            return "prodForm";
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
 
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/vendedor";  
+            try {
+                User user = serviceUser.get(idUser);
+                Produto produto = new Produto();
+                produto.setUser(user);
+                model.addAttribute("produto", produto);
+                model.addAttribute("pageTitle", "Cadastrar Produto");
+                return "prodForm";
+
+            } catch (UserNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+                return "redirect:/vendedor";  
+            }
+        } else {
+            return "redirect:/login";  
         }
+
+        
     }
     
     @PostMapping("/vendedor/meus-produtos/save")
@@ -69,49 +77,50 @@ public class ProdutoController {
             serviceProd.save(produto);
             ra.addFlashAttribute("message", "Produto salvo com sucesso!");
 
-            return "redirect:/vendedor/meus-produtos/{idUser}"; 
+            return "redirect:/vendedor/meus-produtos/"+ idUser;
     }
     
     @GetMapping("/vendedor/meus-produtos/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         HttpSession session = request.getSession();
-        Integer idUser = (Integer) session.getAttribute("idUser");
-        model.addAttribute("idUser", idUser);
-        try {
-            Produto produto = serviceProd.get(id);
-            model.addAttribute("produto", produto);
-            model.addAttribute("pageTitle", "Editar Produto (ID: " + id + ")");
-            return "prodForm";
-        } catch (ProdutoNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/vendedor/meus-produtos/{idUser}";  
+        if (session.getAttribute("user") != null) {
+            Integer idUser = (Integer) session.getAttribute("idUser");
+            model.addAttribute("idUser", idUser);
+            try {
+                Produto produto = serviceProd.get(id);
+                model.addAttribute("produto", produto);
+                model.addAttribute("pageTitle", "Editar Produto (ID: " + id + ")");
+                return "prodForm";
+            } catch (ProdutoNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+                return "redirect:/vendedor/meus-produtos/"+ idUser; 
+            }
+
+        } else {
+            return "redirect:/login";  
         }
+
+
+        
     }
     
     @GetMapping("/vendedor/meus-produtos/delete/{id}")
     public String deleteProduto(@PathVariable("id") Integer id, RedirectAttributes ra, Model model) {
         HttpSession session = request.getSession();
-        Integer idUser = (Integer) session.getAttribute("idUser");
-        model.addAttribute("idUser", idUser);
-        try {
-            serviceProd.delete(id);
-            ra.addFlashAttribute("message", "O produto com ID " + id + " foi deletado.");
-        } catch (ProdutoNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
-        return "redirect:/vendedor/meus-produtos/{idUser}";
-    }
-
-    @GetMapping("/vendedor")
-    public String vendedor(Model model) {
-        HttpSession session = request.getSession();
-        if ((Integer)session.getAttribute("nivelUser") == 2) {
+        if (session.getAttribute("user") != null) {
             Integer idUser = (Integer) session.getAttribute("idUser");
-            model.addAttribute("idUser", idUser);
-            return "mainPage";
+            try {
+                serviceProd.delete(id);
+                ra.addFlashAttribute("message", "O produto com ID " + id + " foi deletado.");
+            } catch (ProdutoNotFoundException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+            }
+            return "redirect:/vendedor/meus-produtos/"+ idUser;
         } else {
             return "redirect:/login";  
         }
+
         
     }
+
 }
