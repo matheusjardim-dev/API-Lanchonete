@@ -6,15 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css}">
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Lanchonete Fatec</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/vendedor/meus-produtos/{idUser}(idUser=${idUser})}" >Meus Produtos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Sair</a>
+              </li>
+            
+            </ul>
+            <span class="navbar-text">
+              Sistema da Lanchonete da Fatec Cruzeiro
+            </span>
+          </div>
+        </div>
+      </nav>
     <div class="container-fluid text-center">
         <div>
-            <h1>Meus Produtos</h1>
+            <h2>Meus Produtos</h2>
         </div>
         <div class="m-2">
-            <a class="h3" th:href="@{/vendedor/meus-produtos/new/{idUser}(idUser=${idUser})}">Cadastrar</a>
+            <a class="btn btn-primary" role="button" th:href="@{/vendedor/meus-produtos/new/{idUser}(idUser=${idUser})}">Cadastrar</a>
         </div>
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
@@ -38,15 +61,15 @@
                             <td>[[${produtos.valor}]]</td>
                             <td>[[${produtos.disponivel}]]</td>
                             <td>
-                                <a class="h4 mr-3" th:href="@{'/vendedor/meus-produtos/edit/'+ ${produtos.id}}">Editar</a>
-                                <a class="h4" th:href="@{'/vendedor/meus-produtos/delete/'+ ${produtos.id}}">Deletar</a>
+                                <a class="btn btn-outline-primary" role="button" th:href="@{'/vendedor/meus-produtos/edit/'+ ${produtos.id}}"><i class="bi bi-pencil-square"></i> Editar</a>
+                                <a class="btn btn-danger" role="button" th:href="@{'/vendedor/meus-produtos/delete/'+ ${produtos.id}}"><i class="bi bi-trash"></i> Deletar</a>
                             </td>
                         </tr>
                     </th:block>
                 </tbody>
             </table>
         </div>
-        <a href="/vendedor">back</a>
+        <a class="btn btn-outline-dark" role="button" href="/vendedor">back</a>
     </div>
 </body>
 

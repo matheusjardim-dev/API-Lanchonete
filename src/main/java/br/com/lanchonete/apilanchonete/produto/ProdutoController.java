@@ -24,19 +24,11 @@ public class ProdutoController {
     public String showProdutoList(@PathVariable("idUser") Integer idUser, Model model, RedirectAttributes ra){
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            try {
-                User user = serviceUser.get(idUser);
-                Integer id = (Integer) session.getAttribute("idUser");
-                List<Produto> listProdutos = serviceProd.listProd(id);
-                model.addAttribute("listProdutos", listProdutos);
-                model.addAttribute("idUser", id);
-                return "meus-produtos";
-
-            } catch (UserNotFoundException e) {
-                ra.addFlashAttribute("message", e.getMessage());
-                return "redirect:/vendedor";  
-            }
-
+            Integer id = (Integer) session.getAttribute("idUser");
+            List<Produto> listProdutos = serviceProd.listProd(id);
+            model.addAttribute("listProdutos", listProdutos);
+            model.addAttribute("idUser", id);
+            return "meus-produtos";
         } else {
             return "redirect:/login";  
         }

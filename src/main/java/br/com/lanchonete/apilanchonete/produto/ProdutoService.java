@@ -38,4 +38,8 @@ public class ProdutoService {
         return repo.findByUser_Id(idUser);
     }
 
+    public void deleteAllByUser_Id(Integer idUser) {
+        repo.deleteAllByUser_Id(idUser);
+    }
+
 }
